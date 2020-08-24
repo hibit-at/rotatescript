@@ -19,14 +19,14 @@ import copy
 import os
 
 def json_create(r,w,h,a):
-    j = {'ActiveInPauseMenu': True, 
-        'Movements': [{'StartPos': {'x': 0, 'y': 0, 'z': 0}, 
-                        'StartRot': {'x': 0, 'y': 0, 'z': 0}, 
-                        'EndPos': {'x': 0, 'y': 0, 'z': 0}, 
-                        'EndRot': {'x': 0, 'y': 0, 'z': 0}, 
-                        'Duration': 0, 
-                        'Delay': 0, 
-                        'EaseTransition': True}
+    j = {"ActiveInPauseMenu": True, 
+        "Movement" : [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
+                        "StartRot": {"x": 0, "y": 0, "z": 0}, 
+                        "EndPos": {"x": 0, "y": 0, "z": 0}, 
+                        "EndRot": {"x": 0, "y": 0, "z": 0}, 
+                        "Duration": 0, 
+                        "Delay": 0, 
+                        "EaseTransition": True}
                     ]
         }
 
