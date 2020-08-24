@@ -36,7 +36,7 @@ def json_create(r,w,h,a):
         new_j = copy.deepcopy(j["Movements"][0])
         j["Movements"].append(new_j)
 
-    h -= a
+    camera_h = h-a
 
     for i in range(need_step):
 
@@ -64,12 +64,12 @@ def json_create(r,w,h,a):
         j["Movements"][i]["EndRot"]["y"] = deg
 
         #角度の計算2 
-        c2 = complex(r,h)
+        c2 = complex(r,camera_h)
         rad2 = cmath.phase(c2)
         deg2 = math.degrees(rad2)
         j["Movements"][i]["StartRot"]["x"] = deg2
 
-        c2 = complex(r,h)
+        c2 = complex(r,camera_h)
         rad2 = cmath.phase(c2)
         deg2 = math.degrees(rad2)
         j["Movements"][i]["EndRot"]["x"] = deg2
