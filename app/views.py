@@ -94,6 +94,3 @@ def index(request):#追加
     debug = "{}{}{}{}<br>".format(r,w,h,a)
     text = str(json_create(r,w,h,a))
     return HttpResponse(text)#追加
-
-def index(request):#追加
-    return HttpResponse("はろわ")#追加
