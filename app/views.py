@@ -18,7 +18,7 @@ import math
 import copy
 import os
 
-def json_create(r,w,h,a):
+def json_create(r,w,h,a,o):
     j = {"ActiveInPauseMenu": True, 
         "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
                         "StartRot": {"x": 0, "y": 0, "z": 0}, 
@@ -47,10 +47,10 @@ def json_create(r,w,h,a):
         j["Movements"][i]["Duration"] = 0.025
         j["Movements"][i]["StartPos"]["x"] = r*math.cos(rad)
         j["Movements"][i]["StartPos"]["y"] = h
-        j["Movements"][i]["StartPos"]["z"] = r*math.sin(rad)
+        j["Movements"][i]["StartPos"]["z"] = r*math.sin(rad)+o
         j["Movements"][i]["EndPos"]["x"] = r*math.cos(next_rad)
         j["Movements"][i]["EndPos"]["y"] = h
-        j["Movements"][i]["EndPos"]["z"] = r*math.sin(next_rad)
+        j["Movements"][i]["EndPos"]["z"] = r*math.sin(next_rad)+o
 
         #角度の計算1
         c = complex(-math.cos(rad),-math.sin(rad))
@@ -91,6 +91,8 @@ def index(request):#追加
     a = 1
     if "a" in request.GET:
         a = float(request.GET["a"])
-    debug = "{}{}{}{}<br>".format(r,w,h,a)
-    text = str(json_create(r,w,h,a)).replace("'",'\"')
+    o = 0
+    if "o" in request.GET:
+        o = float(request.GET["o"])
+    text = str(json_create(r,w,h,a,o)).replace("'",'\"')
     return HttpResponse(text)#追加
