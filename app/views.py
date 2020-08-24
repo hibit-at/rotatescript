@@ -44,7 +44,7 @@ def json_create(r,w,h,a):
         next_rad = 2*math.pi*(i+1)/need_step
 
         #位置のセット
-        j["Movements"][i]["Duration"] = 0.1
+        j["Movements"][i]["Duration"] = 0.025
         j["Movements"][i]["StartPos"]["x"] = r*math.cos(rad)
         j["Movements"][i]["StartPos"]["y"] = h
         j["Movements"][i]["StartPos"]["z"] = r*math.sin(rad)
