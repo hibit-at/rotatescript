@@ -20,7 +20,7 @@ import os
 
 def json_create(r,w,h,a):
     j = {"ActiveInPauseMenu": True, 
-        "Movement" : [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
+        "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
                         "StartRot": {"x": 0, "y": 0, "z": 0}, 
                         "EndPos": {"x": 0, "y": 0, "z": 0}, 
                         "EndRot": {"x": 0, "y": 0, "z": 0}, 
@@ -41,12 +41,10 @@ def json_create(r,w,h,a):
     for i in range(need_step):
 
         rad = 2*math.pi*i/need_step
-        eul = 360*i/need_step
         next_rad = 2*math.pi*(i+1)/need_step
-        next_eul = 360*(i+1)/need_step
 
         #位置のセット
-        j["Movements"][i]["Duration"] = 1/40
+        j["Movements"][i]["Duration"] = 0.1
         j["Movements"][i]["StartPos"]["x"] = r*math.cos(rad)
         j["Movements"][i]["StartPos"]["y"] = h
         j["Movements"][i]["StartPos"]["z"] = r*math.sin(rad)
@@ -76,23 +74,26 @@ def json_create(r,w,h,a):
         deg2 = math.degrees(rad2)
         j["Movements"][i]["EndRot"]["x"] = deg2
 
-        j["Movements"][i]["EaseTransition"] = "false"
+        j["Movements"][i]["EaseTransition"] = False
 
     return j
 
 def index(request):#追加
     r = 2
-    if 'r' in request.GET:
-        r = float(request.GET['r'])
+    if "r" in request.GET:
+        r = float(request.GET["r"])
     w = 1
-    if 'w' in request.GET:
-        w = float(request.GET['w'])
+    if "w" in request.GET:
+        w = float(request.GET["w"])
     h = 2
-    if 'h' in request.GET:
-        h = float(request.GET['h'])
+    if "h" in request.GET:
+        h = float(request.GET["h"])
     a = 1
-    if 'a' in request.GET:
-        a = float(request.GET['a'])
+    if "a" in request.GET:
+        a = float(request.GET["a"])
     debug = "{}{}{}{}<br>".format(r,w,h,a)
     text = str(json_create(r,w,h,a))
     return HttpResponse(text)#追加
+
+def index(request):#追加
+    return HttpResponse("はろわ")#追加
