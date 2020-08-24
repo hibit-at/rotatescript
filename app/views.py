@@ -92,5 +92,5 @@ def index(request):#追加
     if "a" in request.GET:
         a = float(request.GET["a"])
     debug = "{}{}{}{}<br>".format(r,w,h,a)
-    text = str(json_create(r,w,h,a))
+    text = str(json_create(r,w,h,a)).replace("'",'\"')
     return HttpResponse(text)#追加
