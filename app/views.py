@@ -19,14 +19,14 @@ import copy
 import os
 
 def json_create(r,w,h,a,o):
-    j = {"ActiveInPauseMenu": true, 
+    j = {"ActiveInPauseMenu": "true", 
         "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
                         "StartRot": {"x": 0, "y": 0, "z": 0}, 
                         "EndPos": {"x": 0, "y": 0, "z": 0}, 
                         "EndRot": {"x": 0, "y": 0, "z": 0}, 
                         "Duration": 0, 
                         "Delay": 0, 
-                        "EaseTransition": true}
+                        "EaseTransition": "true"}
                     ]
         }
 
@@ -74,7 +74,7 @@ def json_create(r,w,h,a,o):
         deg2 = math.degrees(rad2)
         j["Movements"][i]["EndRot"]["x"] = deg2
 
-        j["Movements"][i]["EaseTransition"] = false
+        j["Movements"][i]["EaseTransition"] = "false"
 
     return j
 
