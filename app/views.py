@@ -101,3 +101,10 @@ def index(request):#追加
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
     return HttpResponse(text)#追加
+
+def sample(request):
+    context = {
+        'message' : '初めてのメッセージ',
+        'content' : 'ようこそ、Djangoは楽しい！',
+    }
+    return render(request,'app/index.html',context)
