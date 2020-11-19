@@ -18,8 +18,8 @@ import math
 import copy
 import os
 
-truestr = True
-falsestr = False
+truestr = "true"
+falsestr = "false"
 
 def json_create(r,w,h,a,o):
     j = {"ActiveInPauseMenu": truestr, 
