@@ -18,8 +18,8 @@ import math
 import copy
 import os
 
-truestr = "true"
-falsestr = "false"
+truestr = True
+falsestr = False
 
 def json_create(r,w,h,a,o):
     j = {"ActiveInPauseMenu": truestr, 
@@ -98,4 +98,6 @@ def index(request):#追加
     if "o" in request.GET:
         o = float(request.GET["o"])
     text = str(json_create(r,w,h,a,o)).replace("'",'\"')
+    text = text.replace('"true"','true')
+    text = text.replace('"false"','false')
     return HttpResponse(text)#追加
