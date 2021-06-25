@@ -1,0 +1,28 @@
+.box1 {
+    color: gray;
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    font-weight: bold;
+    border: solid 1px #000000;
+    background-color: lightgray;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dlb {
+    color: #285EA0;
+    text-align: center;
+    padding: 5px;
+    width: 100px;
+    margin-top: 15px;
+    border-radius: 50px;
+    box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #fff;
+}
+
+.dlb:hover {
+    box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff;
+}

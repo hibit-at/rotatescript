@@ -96,19 +96,19 @@ def index(request):#追加
     return render(request,'app/index.html',params)#追加
 
 def download(request):#追加
-    r = 2
+    r = 2.
     if "r" in request.GET:
         r = float(request.GET["r"])
-    t = 1
+    t = 1.
     if "t" in request.GET:
         t = float(request.GET["t"])
-    h = 2
+    h = 2.
     if "h" in request.GET:
         h = float(request.GET["h"])
-    a = 1
+    a = 0.
     if "a" in request.GET:
         a = float(request.GET["a"])
-    o = 0
+    o = 0.
     if "o" in request.GET:
         o = float(request.GET["o"])
     text = str(json_create(r,t,h,a,o)).replace("'",'\"')
