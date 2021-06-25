@@ -11,7 +11,8 @@ from django.shortcuts import render
 truestr = "true"
 falsestr = "false"
 
-def json_create(r,w,h,a,o):
+def json_create(r,t,h,a,o):
+    w = 1/t
     j = {"ActiveInPauseMenu": truestr, 
         "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
                         "StartRot": {"x": 0, "y": 0, "z": 0}, 
@@ -75,9 +76,9 @@ def index(request):#追加
     r = 2.
     if "r" in request.POST:
         r = float(request.POST["r"])
-    w = 1.
-    if "w" in request.POST:
-        w = float(request.POST["w"])
+    t = 1.
+    if "t" in request.POST:
+        t = float(request.POST["t"])
     h = 2.
     if "h" in request.POST:
         h = float(request.POST["h"])
@@ -87,8 +88,8 @@ def index(request):#追加
     o = 0.
     if "o" in request.POST:
         o = float(request.POST["o"])
-    text = str(json_create(r,w,h,a,o)).replace("'",'\"')
-    par = {'r':r,'w':w,'h':h,'a':a,'o':o}
+    text = str(json_create(r,t,h,a,o)).replace("'",'\"')
+    par = {'r':r,'t':t,'h':h,'a':a,'o':o}
     print(par)
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
@@ -99,9 +100,9 @@ def download(request):#追加
     r = 2
     if "r" in request.GET:
         r = float(request.GET["r"])
-    w = 1
-    if "w" in request.GET:
-        w = float(request.GET["w"])
+    t = 1
+    if "t" in request.GET:
+        t = float(request.GET["t"])
     h = 2
     if "h" in request.GET:
         h = float(request.GET["h"])
@@ -111,7 +112,7 @@ def download(request):#追加
     o = 0
     if "o" in request.GET:
         o = float(request.GET["o"])
-    text = str(json_create(r,w,h,a,o)).replace("'",'\"')
+    text = str(json_create(r,t,h,a,o)).replace("'",'\"')
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
     return HttpResponse(text)

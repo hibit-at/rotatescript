@@ -3,16 +3,17 @@
 <body>
 <link rel="stylesheet" href={% static 'sample.css' %}>
 <header>
-<h1>RotateScript</h1>
+<h1 style="background-color:lightgray;padding:1em;">RotateScriptor</h1>
 <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
 </header>
+<img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=400 height=400>
 <form method="post" action="/">
 {% csrf_token %}
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
-<p><input type="number" placeholder="手入力" name="w" value = {{par.w}} step=0.01 style="width:100;"><span style="font-weight:bold;"> w : {{par.w}}</span> ... 回転数 (r/s) 1秒間に w 回、回転する</p>
+<p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転する（上のロゴと同じ速度です）</p>
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)
-<p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く垂直方向の位置 (m) これが1ならば、顔（1.5m）より 1 m下をカメラは向く。
-<p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの中心の前後方向の位置 (m) これが1ならば、アバター前方の 1 m先を中心にカメラは回転する。</p>
+<p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く垂直方向の位置 (m) これが1ならば、顔（1.5m）より 1 m下をカメラは向く
+<p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの中心の前後方向の位置 (m) これが1ならば、アバター前方の 1 m先を中心にカメラは回転する</p>
 <input type="submit" value="再計算"></p>
 </form>
 <p><a href="/download" download="rotate-{{par.r}}-{{par.w}}-{{par.h}}-{{par.a}}-{{par.o}}.json">jsonファイルをダウンロード</a></p>
