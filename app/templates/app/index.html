@@ -12,35 +12,27 @@
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
 <p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転する（上のロゴと同じ速度です）</p>
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)
-<p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く垂直方向の位置 (m) これが1ならば、顔（1.5m）より 1 m下をカメラは向く
-<p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの中心の前後方向の位置 (m) これが1ならば、アバター前方の 1 m先を中心にカメラは回転する</p>
+<p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く垂直方向の位置 (m) これが 1 ならば、顔（1.5m）より 1 m下をカメラは向く
+<p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの中心の前後方向の位置 (m) これが 1 ならば、アバター前方の 1 m先を中心にカメラは回転する</p>
 <input type="submit" value="再計算"></p>
 </form>
 <p><a href="/download" download="rotate-{{par.r}}-{{par.w}}-{{par.h}}-{{par.a}}-{{par.o}}.json">jsonファイルをダウンロード</a></p>
 <p>
 CODE:
-<input id="copyTarget" type="hidden" value="{{text}}">
 <button onclick="copyToClipboard()">COPY</button>
-<input id="copyTarget" type="hidden" value={{text}} readonly>
 </p>
 <div class="box1">
 <code>
 {{text}}
 </code>
 </div>
+<input id="copyTarget" style="width:1em" type="text" value="{{text}}"> ※エラー防止用のフォームです。お気にせず。
 <script>
 function copyToClipboard() {
-// コピー対象をJavaScript上で変数として定義する
 var copyTarget = document.getElementById("copyTarget");
-
-// コピー対象のテキストを選択する
 copyTarget.select();
-
-// 選択しているテキストをクリップボードにコピーする
 document.execCommand("Copy");
-
-// コピーをお知らせする
-alert("コードをコピーしました");
+alert("Copied : " + copyTarget.value);
 }
 </script>
 </body>

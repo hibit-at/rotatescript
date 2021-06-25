@@ -10,3 +10,11 @@
 @keyframes rotate{
     100%{ transform: rotate(360deg);}
 }
+
+.hideInput {
+    border: none;
+    background-color: inherit;
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0);
+    width: 0.1em;
+  }
