@@ -82,7 +82,7 @@ def index(request):#追加
     h = 2.
     if "h" in request.POST:
         h = float(request.POST["h"])
-    a = 0.
+    a = 1.5
     if "a" in request.POST:
         a = float(request.POST["a"])
     o = 0.
@@ -105,7 +105,7 @@ def download(request):#追加
     h = 2.
     if "h" in request.GET:
         h = float(request.GET["h"])
-    a = 0.
+    a = 1.5
     if "a" in request.GET:
         a = float(request.GET["a"])
     o = 0.
