@@ -82,7 +82,7 @@ def index(request):#追加
     h = 2.
     if "h" in request.POST:
         h = float(request.POST["h"])
-    a = 1.
+    a = 0.
     if "a" in request.POST:
         a = float(request.POST["a"])
     o = 0.
@@ -90,7 +90,6 @@ def index(request):#追加
         o = float(request.POST["o"])
     text = str(json_create(r,t,h,a,o)).replace("'",'\"')
     par = {'r':r,'t':t,'h':h,'a':a,'o':o}
-    print(par)
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
     params = {'text' : text, 'par' : par}
