@@ -1,51 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
-  <script>
-    // ページの読み込みを待つ
-    window.addEventListener('load', init);
+{% load static %}
 
-    function init() {
-
-      // サイズを指定
-      const width = 960;
-      const height = 540;
-
-      // レンダラーを作成
-      const renderer = new THREE.WebGLRenderer({
-        canvas: document.querySelector('#myCanvas')
-      });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(width, height);
-
-      // シーンを作成
-      const scene = new THREE.Scene();
-
-      // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height);
-      camera.position.set(0, 0, +1000);
-
-      // 箱を作成
-      const geometry = new THREE.BoxGeometry(400, 400, 400);
-      const material = new THREE.MeshNormalMaterial();
-      const box = new THREE.Mesh(geometry, material);
-      scene.add(box);
-
-      tick();
-
-      // 毎フレーム時に実行されるループイベントです
-      function tick() {
-        box.rotation.y += 0.01;
-        renderer.render(scene, camera); // レンダリング
-
-        requestAnimationFrame(tick);
-      }
-    }
-  </script>
-</head>
 <body>
-  <canvas id="myCanvas"></canvas>
+<link rel="stylesheet" href={% static 'sample.css' %}>
+<header>
+<h1>RotateScript</h1>
+<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
+</header>
+<form method="post" action="/">
+{% csrf_token %}
+<p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
+<p><input type="number" placeholder="手入力" name="w" value = {{par.w}} step=0.01 style="width:100;"><span style="font-weight:bold;"> w : {{par.w}}</span> ... 回転数 (r/s) 1秒間に w 回、回転する</p>
+<p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)
+<p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く垂直方向の位置 (m) これが1ならば、顔（1.5m）より 1 m下をカメラは向く。
+<p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの中心の前後方向の位置 (m) これが1ならば、アバター前方の 1 m先を中心にカメラは回転する。</p>
+<input type="submit" value="再計算"></p>
+</form>
+<p><a href="/download" download="rotate-{{par.r}}-{{par.w}}-{{par.h}}-{{par.a}}-{{par.o}}.json">jsonファイルをダウンロード</a></p>
+<p>
+CODE:
+<input id="copyTarget" type="hidden" value="{{text}}">
+<button onclick="copyToClipboard()">COPY</button>
+<input id="copyTarget" type="hidden" value={{text}} readonly>
+</p>
+<div class="box1">
+<code>
+{{text}}
+</code>
+</div>
+<script>
+function copyToClipboard() {
+// コピー対象をJavaScript上で変数として定義する
+var copyTarget = document.getElementById("copyTarget");
+
+// コピー対象のテキストを選択する
+copyTarget.select();
+
+// 選択しているテキストをクリップボードにコピーする
+document.execCommand("Copy");
+
+// コピーをお知らせする
+alert("コードをコピーしました");
+}
+</script>
 </body>
-</html>

@@ -1,22 +1,12 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-from django.http import HttpResponse #追加
-
-
-from django.shortcuts import render
-
-# Create your views here.
-
-from django.http import HttpResponse #追加
-
-import json
-import csv
 import cmath
-import math
 import copy
+import csv
+import json
+import math
 import os
+
+from django.http import HttpResponse  # 追加
+from django.shortcuts import render
 
 truestr = "true"
 falsestr = "false"
@@ -82,6 +72,30 @@ def json_create(r,w,h,a,o):
     return j
 
 def index(request):#追加
+    r = 2.
+    if "r" in request.POST:
+        r = float(request.POST["r"])
+    w = 1.
+    if "w" in request.POST:
+        w = float(request.POST["w"])
+    h = 2.
+    if "h" in request.POST:
+        h = float(request.POST["h"])
+    a = 1.
+    if "a" in request.POST:
+        a = float(request.POST["a"])
+    o = 0.
+    if "o" in request.POST:
+        o = float(request.POST["o"])
+    text = str(json_create(r,w,h,a,o)).replace("'",'\"')
+    par = {'r':r,'w':w,'h':h,'a':a,'o':o}
+    print(par)
+    text = text.replace('"true"','true')
+    text = text.replace('"false"','false')
+    params = {'text' : text, 'par' : par}
+    return render(request,'app/index.html',params)#追加
+
+def download(request):#追加
     r = 2
     if "r" in request.GET:
         r = float(request.GET["r"])
@@ -100,11 +114,7 @@ def index(request):#追加
     text = str(json_create(r,w,h,a,o)).replace("'",'\"')
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
-    return HttpResponse(text)#追加
+    return HttpResponse(text)
 
 def sample(request):
-    context = {
-        'message' : '初めてのメッセージ',
-        'content' : 'ようこそ、Djangoは楽しい！',
-    }
-    return render(request,'app/index.html',context)
+    return render(request,'app/three.html')
