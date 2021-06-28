@@ -76,7 +76,7 @@ def index(request):#追加
     r = 2.
     if "r" in request.POST:
         r = float(request.POST["r"])
-    t = 1.
+    t = 3.
     if "t" in request.POST:
         t = float(request.POST["t"])
     h = 2.
