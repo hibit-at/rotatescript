@@ -100,18 +100,128 @@
 <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
 </header>
 <body onLoad="disp()">
-<h2>カメラの動き</h2>
+<h2>カメラプレビュー</h2>
+<p>
 <a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}.json">JSONダウンロード</a>
 </p>
+{% if is3D == '0' %}
+<script>
+var start = new Date();
+var sec = 0;
+var now = 0;
+var datet = 0;
+WIDTH = 500;
+HEIGHT = 500;
+canvas = document.createElement('canvas');
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
+canvas.style.border = "1px solid";
+var ctx = canvas.getContext('2d');
+document.body.appendChild(canvas);
+canvas2 = document.createElement('canvas');
+canvas2.width = 500;
+canvas2.height = 500;
+canvas2.style.border = "1px solid";
+var ctx2 = canvas2.getContext('2d');
+document.body.appendChild(canvas2);
+
+function loop(timestamp) {
+
+  var now = new Date();
+  var sec = (now.getTime() - start)/1000;
+  var theta = sec*2*Math.PI/{{par.t}};
+  var radius = 100*{{par.r}};
+  var offset = 100*{{par.o}};
+  var height = 100*{{par.h}};
+
+  //init
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+  //stage
+  ctx.fillStyle = 'lightblue';
+  ctx.fillRect( 50, 400, 400, 100)
+
+  //humanbody
+  ctx.fillStyle = 'gray';
+  ctx.fillRect( 225, 270, 50, 130)
+
+  //humanhead
+  ctx.beginPath();
+  ctx.arc(250, 250, 20, 0, 2*Math.PI);
+  ctx.fillStyle = 'gray';
+  ctx.fill();
+
+  //cameratarget
+  ctx.beginPath();
+  ctx.fillStyle= 'red';
+  ctx.arc(250, 400-100*{{par.a}}, 10, 0, 2*Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+
+  //camera
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.arc(250+radius*Math.sin(theta), 400-height, 10, 0, 2*Math.PI);
+  ctx.fill();
+
+  //init2
+  ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+
+  //stage2
+  ctx2.fillStyle = 'lightblue';
+  ctx2.fillRect(50,150,400,200);
+
+  //human2
+  ctx2.fillStyle = 'gray';
+  ctx2.fillRect(225,225,50,50);
+  ctx2.strokeStyle = 'black';
+  ctx2.strokeRect(225,225,50,50);
+
+  //camera2
+  ctx2.beginPath();
+  ctx2.fillStyle = 'black';
+  ctx2.arc(250+radius*Math.sin(theta), 250+offset+radius*Math.cos(theta), 10, 0, 2*Math.PI);
+  ctx2.fill();
+
+  //cameratarget2
+  ctx2.beginPath();
+  ctx2.fillStyle= 'red';
+  ctx2.arc(250, 250+offset, 10, 0, 2*Math.PI);
+  ctx2.fill();
+  ctx2.strokeStyle = 'black';
+  ctx2.stroke();
+
+  //forward
+  ctx2.fillStyle = 'darkgray'
+  ctx2.font = "bold 30px 'MS gothic'"
+  ctx2.fillText('前方', 225, 450);
+
+  // requestAnimationFrameを呼び出す。
+  // requestAnimationFrameは1度の呼び出しで1回しか実行してくれないため
+  // 毎回呼び出す必要がある。
+  window.requestAnimationFrame((ts) => loop(ts));
+}
+
+// requestAnimationFrameを1回だけ呼び出す。
+// あとはloop関数の中でrequestAnimationFrameが呼び出され
+// その中でloop関数が実行され、そのloop関数の中でrequestAnimationFrameが…
+// となるので永遠にアニメーションが続く。
+window.requestAnimationFrame((ts) => loop(ts));
+</script>
+<p>● ... カメラ、<span style="color:red;">●</span> ... カメラが向く方向</p>
+{% else %}
 <canvas id="myCanvas"></canvas>
+{% endif %}
 <form method="post" action="/">
 {% csrf_token %}
+<p>プレビュー</p>
+<p><input type="range" min='0' max='1' value={{is3D}} name="is3D">左：二面図　右：立体　<input type="submit" value="再計算"></p>
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
 <p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転します</p>
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)</p>
 <p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く方向の、垂直方向の位置 (m)</p>
 <p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの回転の中心及びカメラが向く方向の、前後方向の位置 (m)</p>
-<input type="submit" value="再計算"></p>
 </form>
 <p>
 CODE:

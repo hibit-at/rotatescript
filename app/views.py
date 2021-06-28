@@ -88,11 +88,14 @@ def index(request):#追加
     o = 0.
     if "o" in request.POST:
         o = float(request.POST["o"])
+    is3D = '1'
+    if "is3D" in request.POST:
+        is3D = request.POST["is3D"]
     text = str(json_create(r,t,h,a,o)).replace("'",'\"')
     par = {'r':r,'t':t,'h':h,'a':a,'o':o}
     text = text.replace('"true"','true')
     text = text.replace('"false"','false')
-    params = {'text' : text, 'par' : par}
+    params = {'text' : text, 'par' : par, 'is3D' : is3D}
     return render(request,'app/index.html',params)#追加
 
 def download(request):#追加
