@@ -96,12 +96,11 @@
 <body onload="disp()">
 <link rel="stylesheet" href={% static 'sample.css' %}>
 <header>
-<h1 style="background-color:lightgray;padding:1em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> RotateScriptor</h1>
+<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> RotateScriptor</h1>
 <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
 </header>
 <body onLoad="disp()">
 <h2>カメラの動き</h2>
-<p>（左図...正面、右図...見下ろし）
 <a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}.json">JSONダウンロード</a>
 </p>
 <canvas id="myCanvas"></canvas>
