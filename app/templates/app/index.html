@@ -47,7 +47,6 @@
             box.position.set(0, -200, 0);
             scene.add(box);
 
-
             const geometry2 = new THREE.BoxGeometry(40, 130, 40);
             const material2 = new THREE.MeshLambertMaterial({
                 color: 0xaaaaaa
@@ -56,12 +55,10 @@
             box2.position.set(0, 65, 0);
             scene.add(box2);
 
-
             const geometry3 = new THREE.SphereGeometry(25, 32, 32);
             const sphere = new THREE.Mesh(geometry3, material2);
             sphere.position.set(0, 155, 0);
             scene.add(sphere);
-
 
             const geometry4 = new THREE.CylinderGeometry(5, 5, 100, 8);
             const material4 = new THREE.MeshBasicMaterial({
@@ -215,7 +212,6 @@ window.requestAnimationFrame((ts) => loop(ts));
 {% endif %}
 <form method="post" action="/">
 {% csrf_token %}
-<p>プレビュー</p>
 <p><input type="range" min='0' max='1' value={{is3D}} name="is3D">左：二面図　右：立体　<input type="submit" value="再計算"></p>
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
 <p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転します</p>

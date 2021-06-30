@@ -121,3 +121,6 @@ def download(request):#追加
 
 def sample(request):
     return render(request,'app/three.html')
+
+def angle(request):
+    return render(request,'app/angle.html')

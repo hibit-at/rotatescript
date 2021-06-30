@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r127/three.min.js"></script>
+  <script src="{% static 'OrbitControls.js' %}"></script>
+  <script>
+    // ページの読み込みを待つ
+    window.addEventListener('load', init);
+
+
+
+    function init() {
+
+      var offset_y = 0;
+      var offset_x = 0;
+      var offset_z = 0;
+
+      // サイズを指定
+      const width = 960;
+      const height = 540;
+
+      // レンダラーを作成
+      const canvasElement = document.querySelector('#myCanvas')
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvasElement,
+      });
+      renderer.setSize(width, height);
+
+      // シーンを作成
+      const scene = new THREE.Scene();
+
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, -300);
+
+
+      //キー入力
+      window.addEventListener('keydown', keydownfunc);
+      function keydownfunc(event){
+        var key_code = event.keyCode;
+        if( key_code == 87 ) offset_y += 10;
+        if( key_code == 88 ) offset_y -= 10;
+        if( key_code == 65 ) offset_x += 10;
+        if( key_code == 68 ) offset_x -= 10;
+        if( key_code == 83 ) offset_z += 10;
+        if( key_code == 32 ) offset_z -= 10;
+      }
+
+      // controls
+      const controls = new THREE.OrbitControls(camera, canvasElement);
+      controls.target.y = offset_y;
+      controls.target.x = offset_x;
+      controls.target.z = offset_z;
+
+      // light
+      const light = new THREE.DirectionalLight(0xFFFFFF, 1);
+      scene.add(light);
+      const light2 = new THREE.AmbientLight(0xFFFFFF, .2);
+      scene.add(light2);
+
+      // 箱を作成
+      const geometry = new THREE.BoxGeometry(400, 400, 200);
+      const material = new THREE.MeshLambertMaterial({
+          color: 0x6699FF
+      });
+      const box = new THREE.Mesh(geometry, material);
+      box.position.set(0, -200, 0);
+      scene.add(box);
+
+      const geometry2 = new THREE.BoxGeometry(40, 130, 40);
+      const material2 = new THREE.MeshLambertMaterial({
+          color: 0xaaaaaa
+      });
+      const box2 = new THREE.Mesh(geometry2, material2);
+      box2.position.set(0, 65, 0);
+      scene.add(box2);
+
+      const geometry3 = new THREE.SphereGeometry(25, 32, 32);
+      const sphere = new THREE.Mesh(geometry3, material2);
+      sphere.position.set(0, 155, 0);
+      scene.add(sphere);
+
+      const geometry4 = new THREE.CylinderGeometry(5, 5, 100, 8);
+      const material4 = new THREE.MeshBasicMaterial({
+          color: 0x0000ff
+      });
+      const saber1 = new THREE.Mesh(geometry4, material4);
+      saber1.position.set(-50, 100, 20);
+      saber1.rotation.x = 10;
+      scene.add(saber1);
+
+      const material5 = new THREE.MeshBasicMaterial({
+          color: 0xff0000
+      });
+      const saber2 = new THREE.Mesh(geometry4, material5);
+      saber2.position.set(50, 100, 20);
+      saber2.rotation.x = 10;
+      scene.add(saber2);
+
+      window.addEventListener("keydown", handleKeydown);
+
+      function handleKeydown(event){
+        console.log("キーボードが押された");
+      }
+
+      tick();
+
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        controls.target.y = offset_y;
+        controls.target.x = offset_x;
+        controls.target.z = offset_z;
+        renderer.render(scene, camera); // レンダリング
+        requestAnimationFrame(tick);
+        var px = -Math.round(camera.position.x)/100;
+        var py = Math.round(camera.position.y)/100;
+        var pz = Math.round(camera.position.z)/100;
+        var rx = Math.round(camera.rotation.x*180/Math.PI);
+        var ry = Math.round(camera.rotation.y*180/Math.PI);
+        var rz = Math.round(camera.rotation.z*180/Math.PI);
+        var ox = -Math.round(offset_x)/100;
+        var oy = Math.round(offset_y)/100;
+        var oz = Math.round(offset_z)/100;
+        var pos_text = 'POS : x ... ' + String(px) + ', y ... ' + String(py) + ', z ... ' + String(pz);
+        var rot_text = 'ROT : x ... ' + String(rx) + ', y ... ' + String(ry) + ', z ... ' + String(rz);
+        var offset_text = 'POS : x ... ' + String(ox) + ', y ... ' + String(oy) + ', z ... ' + String(oz);
+        var pos_div = document.getElementById('pos_div');
+        var rot_div = document.getElementById('rot_div');
+        var offset_div = document.getElementById('offset_div');
+        pos_div.innerHTML = pos_text;
+        rot_div.innerHTML = rot_text;
+        offset_div.innerHTML = offset_text;
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+  <div id="pos_div">hoge</div>
+  <div id="rot_div">hoge</div>
+  <div id="offset_div">hoge</div>
+</body>
+</html>
