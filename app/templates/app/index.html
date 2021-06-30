@@ -28,7 +28,7 @@
             scene.add(light2);
 
             // カメラを作成
-            const camera = new THREE.PerspectiveCamera(60, width / height,1,20000);
+            const camera = new THREE.PerspectiveCamera(65, width / height,1,20000);
             camera.position.set(0, {{par.h}}*100, {{par.r}}*100);
             camera.lookAt(new THREE.Vector3(0,{{par.a}}*100, 0));
 
