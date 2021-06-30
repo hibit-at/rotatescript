@@ -33,8 +33,9 @@
       const scene = new THREE.Scene();
 
       // カメラを作成
-      const camera = new THREE.PerspectiveCamera(45, width / height);
-      camera.position.set(0, 0, -300);
+      const camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+      camera.position.set(0, 450, -450);
+      camera.rotation.order = "YZX"
 
 
       //キー入力
@@ -87,6 +88,7 @@
       const material4 = new THREE.MeshBasicMaterial({
           color: 0x0000ff
       });
+
       const saber1 = new THREE.Mesh(geometry4, material4);
       saber1.position.set(-50, 100, 20);
       saber1.rotation.x = 10;
@@ -100,11 +102,13 @@
       saber2.rotation.x = 10;
       scene.add(saber2);
 
-      window.addEventListener("keydown", handleKeydown);
-
-      function handleKeydown(event){
-        console.log("キーボードが押された");
-      }
+      const geometry6 = new THREE.BoxGeometry(250,400,2000);
+      const material6 = new THREE.MeshLambertMaterial({
+        color : 0x444444
+      });
+      const lane = new THREE.Mesh(geometry6, material6)
+      lane.position.set(0,-200,1200);
+      scene.add(lane);
 
       tick();
 
@@ -118,15 +122,15 @@
         var px = -Math.round(camera.position.x)/100;
         var py = Math.round(camera.position.y)/100;
         var pz = Math.round(camera.position.z)/100;
-        var rx = Math.round(camera.rotation.x*180/Math.PI);
-        var ry = Math.round(camera.rotation.y*180/Math.PI);
+        var rx = -Math.round(camera.rotation.x*180/Math.PI);
+        var ry = -Math.round(camera.rotation.y*180/Math.PI)+180;
         var rz = Math.round(camera.rotation.z*180/Math.PI);
         var ox = -Math.round(offset_x)/100;
         var oy = Math.round(offset_y)/100;
         var oz = Math.round(offset_z)/100;
         var pos_text = 'POS : x ... ' + String(px) + ', y ... ' + String(py) + ', z ... ' + String(pz);
         var rot_text = 'ROT : x ... ' + String(rx) + ', y ... ' + String(ry) + ', z ... ' + String(rz);
-        var offset_text = 'POS : x ... ' + String(ox) + ', y ... ' + String(oy) + ', z ... ' + String(oz);
+        var offset_text = 'TARGET POS : x ... ' + String(ox) + ', y ... ' + String(oy) + ', z ... ' + String(oz);
         var pos_div = document.getElementById('pos_div');
         var rot_div = document.getElementById('rot_div');
         var offset_div = document.getElementById('offset_div');
@@ -139,8 +143,22 @@
 </head>
 <body>
   <canvas id="myCanvas"></canvas>
-  <div id="pos_div">hoge</div>
-  <div id="rot_div">hoge</div>
-  <div id="offset_div">hoge</div>
+  <p>マウスドラッグ...カメラ回転、マウスホイール...カメラズーム　<input type="button" value="RESET" onclick="window.location.reload();" /></p>
+  <p><span id="pos_div" style="font-weight:bold;background-color:#aaa;">hoge</span></p>
+  <p><span id="rot_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
+  <p>カメラターゲットの設定</p>
+  <p><span id="offset_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
+  <div style="line-height:10px;">
+  <p>画像の中央がカメラが向く方向であり、回転の中心になります。カメラターゲットは以下の操作で動かすことができます。</p>
+  <p><span style="font-weight:bold;">W/X</span> ... 上/下（UnityでいうY軸）</p>
+  <p><span style="font-weight:bold;">A/D</span> ... 左/右（UnityでいうX軸）</p>
+  <p><span style="font-weight:bold;">S/Space</span> ... 奥/手前（UnityでいうZ軸）</p>
+  <div stlye="color:#aa0;">
+  <p>以下は開発者がThree.jsのライブラリを使いこなせてないことによる不便な部分です。ご容赦ください</p>
+  <p>※3Dソフトによくある、ホイールドラッグによる並行移動はありません。</p>
+  <p>※カメラターゲットの移動を組み合わせることにより並行移動してください。</p>
+  <p>※画像内でドラッグ/スクロールすることにより始めてカメラターゲットの変更がプレビューに反映されます。</p>
+  </div>
+
 </body>
 </html>
