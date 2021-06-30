@@ -138,9 +138,9 @@
         controls.target.z = offset_z;
         renderer.render(scene, camera); // レンダリング
         requestAnimationFrame(tick);
-        var px = -Math.round(camera.position.x)/10;
-        var py = Math.round(camera.position.y)/10;
-        var pz = Math.round(camera.position.z)/10;
+        var px = -Math.round(camera.position.x/10)/10;
+        var py = Math.round(camera.position.y/10)/10;
+        var pz = Math.round(camera.position.z/10)/10;
         var rx = -Math.round(camera.rotation.x*180/Math.PI);
         var ry = -Math.round(camera.rotation.y*180/Math.PI)+180;
         var rz = Math.round(camera.rotation.z*180/Math.PI);
