@@ -11,20 +11,20 @@ from django.shortcuts import render
 truestr = "true"
 falsestr = "false"
 
-def json_create(r,t,h,a,o):
-    w = 1/t
-    j = {"ActiveInPauseMenu": truestr, 
-        "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0}, 
-                        "StartRot": {"x": 0, "y": 0, "z": 0}, 
-                        "EndPos": {"x": 0, "y": 0, "z": 0}, 
-                        "EndRot": {"x": 0, "y": 0, "z": 0}, 
-                        "Duration": 0, 
-                        "Delay": 0, 
-                        "EaseTransition": truestr}
-                    ]
-        }
 
-    need_step = math.ceil(40/w)
+def json_create(r, t, h, a, o):
+    j = {"ActiveInPauseMenu": truestr,
+         "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0},
+                        "StartRot": {"x": 0, "y": 0, "z": 0},
+                        "EndPos": {"x": 0, "y": 0, "z": 0},
+                        "EndRot": {"x": 0, "y": 0, "z": 0},
+                        "Duration": 0,
+                        "Delay": 0,
+                        "EaseTransition": falsestr}
+                       ]
+         }
+
+    need_step = 18
 
     for i in range(need_step-1):
         new_j = copy.deepcopy(j["Movements"][0])
@@ -37,8 +37,8 @@ def json_create(r,t,h,a,o):
         rad = 2*math.pi*i/need_step
         next_rad = 2*math.pi*(i+1)/need_step
 
-        #位置のセット
-        j["Movements"][i]["Duration"] = 0.025
+        # 位置のセット
+        j["Movements"][i]["Duration"] = t/36
         j["Movements"][i]["StartPos"]["x"] = r*math.cos(rad)
         j["Movements"][i]["StartPos"]["y"] = h
         j["Movements"][i]["StartPos"]["z"] = r*math.sin(rad)+o
@@ -46,33 +46,23 @@ def json_create(r,t,h,a,o):
         j["Movements"][i]["EndPos"]["y"] = h
         j["Movements"][i]["EndPos"]["z"] = r*math.sin(next_rad)+o
 
-        #角度の計算1
-        c = complex(-math.cos(rad),-math.sin(rad))
-        rad = cmath.phase(c)
-        deg = -math.degrees(rad)+90
-        j["Movements"][i]["StartRot"]["y"] = deg 
-        
-        c = complex(-math.cos(next_rad),-math.sin(next_rad))
-        rad = cmath.phase(c)
-        deg = -math.degrees(rad)+90
+        # 角度の計算1
+        deg = 270-math.degrees(rad)
+        j["Movements"][i]["StartRot"]["y"] = deg
+        deg = 270-math.degrees(next_rad)
         j["Movements"][i]["EndRot"]["y"] = deg
 
-        #角度の計算2 
-        c2 = complex(r,camera_h)
+        # 角度の計算2
+        c2 = complex(r, camera_h)
         rad2 = cmath.phase(c2)
         deg2 = math.degrees(rad2)
         j["Movements"][i]["StartRot"]["x"] = deg2
-
-        c2 = complex(r,camera_h)
-        rad2 = cmath.phase(c2)
-        deg2 = math.degrees(rad2)
         j["Movements"][i]["EndRot"]["x"] = deg2
-
-        j["Movements"][i]["EaseTransition"] = falsestr
 
     return j
 
-def index(request):#追加
+
+def index(request):  # 追加
     r = 2.
     if "r" in request.POST:
         r = float(request.POST["r"])
@@ -91,14 +81,15 @@ def index(request):#追加
     is3D = '1'
     if "is3D" in request.POST:
         is3D = request.POST["is3D"]
-    text = str(json_create(r,t,h,a,o)).replace("'",'\"')
-    par = {'r':r,'t':t,'h':h,'a':a,'o':o}
-    text = text.replace('"true"','true')
-    text = text.replace('"false"','false')
-    params = {'text' : text, 'par' : par, 'is3D' : is3D}
-    return render(request,'app/index.html',params)#追加
+    text = str(json_create(r, t, h, a, o)).replace("'", '\"')
+    par = {'r': r, 't': t, 'h': h, 'a': a, 'o': o}
+    text = text.replace('"true"', 'true')
+    text = text.replace('"false"', 'false')
+    params = {'text': text, 'par': par, 'is3D': is3D}
+    return render(request, 'app/index.html', params)  # 追加
 
-def download(request):#追加
+
+def download(request):  # 追加
     r = 2.
     if "r" in request.GET:
         r = float(request.GET["r"])
@@ -114,13 +105,15 @@ def download(request):#追加
     o = 0.
     if "o" in request.GET:
         o = float(request.GET["o"])
-    text = str(json_create(r,t,h,a,o)).replace("'",'\"')
-    text = text.replace('"true"','true')
-    text = text.replace('"false"','false')
+    text = str(json_create(r, t, h, a, o)).replace("'", '\"')
+    text = text.replace('"true"', 'true')
+    text = text.replace('"false"', 'false')
     return HttpResponse(text)
 
-def sample(request):
-    return render(request,'app/three.html')
 
-def angle(request):
-    return render(request,'app/angle.html')
+def sample(request):
+    return render(request, 'app/three.html')
+
+
+def params(request):
+    return render(request, 'app/params.html')

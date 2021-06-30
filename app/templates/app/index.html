@@ -94,10 +94,9 @@
 <link rel="stylesheet" href={% static 'sample.css' %}>
 <header>
 <h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> RotateScriptor</h1>
-<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
+<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。　パラメータ可視化サービス→<a href="params">Params Detector</a></p>
 </header>
 <body onLoad="disp()">
-<h2>カメラプレビュー</h2>
 <p>
 <a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}.json">JSONダウンロード</a>
 </p>
@@ -212,7 +211,7 @@ window.requestAnimationFrame((ts) => loop(ts));
 {% endif %}
 <form method="post" action="/">
 {% csrf_token %}
-<p><input type="range" min='0' max='1' value={{is3D}} name="is3D">左：二面図　右：立体　<input type="submit" value="再計算"></p>
+<p><span style="font-weight:bold;">プレビュー</span>　<input type="range" min='0' max='1' value={{is3D}} name="is3D">　左：二面図　右：立体　<input type="submit" value="再計算"></p>
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
 <p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転します</p>
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)</p>
@@ -221,20 +220,22 @@ window.requestAnimationFrame((ts) => loop(ts));
 </form>
 <p>
 CODE:
-<button onclick="copyToClipboard()">COPY</button>
+<button onclick="copyToClipboard()">COPY</button><span id="notify"></span>
 </p>
 <div class="box1">
 <code>
 {{text}}
 </code>
 </div>
-<input id="copyTarget" style="width:1em" type="text" value="{{text}}"> ※エラー防止用のダミーフォームです。
+<input id="copyTarget" style="width:10em" type="text" value="{{text}}"> ※エラー防止用のダミーフォームです。
 <script>
 function copyToClipboard() {
 var copyTarget = document.getElementById("copyTarget");
 copyTarget.select();
 document.execCommand("Copy");
-alert("コードをコピーしました");
+// alert("コードをコピーしました");
+var notify = document.getElementById('notify');
+notify.innerHTML = "Copied!"
 }
 </script>
 </body>

@@ -10,7 +10,26 @@
     // ページの読み込みを待つ
     window.addEventListener('load', init);
 
+    
+    function copyToClipboard1() {
+      var copyTarget = document.getElementById("copyTarget1");
+      copyTarget.select();
+      document.execCommand("Copy");
+      var notify1 = document.getElementById("pos_notify");
+      notify1.innerHTML = "Copied" + copyTarget.value;
+      var notify2 = document.getElementById("rot_notify");
+      notify2.innerHTML = "";
+    }
 
+    function copyToClipboard2() {
+      var copyTarget = document.getElementById("copyTarget2");
+      copyTarget.select();
+      document.execCommand("Copy");
+      var notify1 = document.getElementById("pos_notify");
+      notify1.innerHTML = "";
+      var notify2 = document.getElementById("rot_notify");
+      notify2.innerHTML = "Copied" + copyTarget.value;
+    }
 
     function init() {
 
@@ -128,8 +147,8 @@
         var ox = -Math.round(offset_x)/100;
         var oy = Math.round(offset_y)/100;
         var oz = Math.round(offset_z)/100;
-        var pos_text = 'POS : x ... ' + String(px) + ', y ... ' + String(py) + ', z ... ' + String(pz);
-        var rot_text = 'ROT : x ... ' + String(rx) + ', y ... ' + String(ry) + ', z ... ' + String(rz);
+        var pos_text = '{"x":' + String(px) + ',"y":' + String(py) + ',"z":' + String(pz) + '}';
+        var rot_text = '{"x":' + String(rx) + ',"y":' + String(ry) + ',"z":' + String(rz) + '}';
         var offset_text = 'TARGET POS : x ... ' + String(ox) + ', y ... ' + String(oy) + ', z ... ' + String(oz);
         var pos_div = document.getElementById('pos_div');
         var rot_div = document.getElementById('rot_div');
@@ -137,15 +156,29 @@
         pos_div.innerHTML = pos_text;
         rot_div.innerHTML = rot_text;
         offset_div.innerHTML = offset_text;
+        var pos_box = document.getElementById('copyTarget1');
+        pos_box.value = pos_text;
+        var pos_box = document.getElementById('copyTarget2');
+        pos_box.value = rot_text;
       }
     }
+
   </script>
 </head>
+<header>
+<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" width=50 height=50>Params Detector</h1>
+<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラの位置・角度パラメータと見え方をプレビューするWebサービスです。　回転スクリプト生成サービス→<a href="/">Rotate Scriptor</a></p>
+</header>
 <body>
   <canvas id="myCanvas"></canvas>
   <p>マウスドラッグ...カメラ回転、マウスホイール...カメラズーム　<input type="button" value="RESET" onclick="window.location.reload();" /></p>
-  <p><span id="pos_div" style="font-weight:bold;background-color:#aaa;">hoge</span></p>
-  <p><span id="rot_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
+  <p>POS : <span id="pos_div" style="font-weight:bold;background-color:#aaa;">hoge</span>  <button type="submit" onclick="copyToClipboard1()">COPY</button>
+  <span id="pos_notify"></span>　</p>
+
+
+  <p>ROT : <span id="rot_div" style="font-weight:bold;background-color:#aaa;";>hoge</span>　<button onclick="copyToClipboard2()">COPY</button>
+  <span id="rot_notify"></span></p>
+  
   <p>カメラターゲットの設定</p>
   <p><span id="offset_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
   <div style="line-height:10px;">
@@ -158,7 +191,9 @@
   <p>※3Dソフトによくある、ホイールドラッグによる並行移動はありません。</p>
   <p>※カメラターゲットの移動を組み合わせることにより並行移動してください。</p>
   <p>※画像内でドラッグ/スクロールすることにより始めてカメラターゲットの変更がプレビューに反映されます。</p>
+  <p>※z軸の回転（ロール）はできません。</p>
   </div>
-
+    <input id="copyTarget1" type="text" value="hoge" readonly>
+      <input id="copyTarget2" type="text" value="hoge" readonly>
 </body>
 </html>
