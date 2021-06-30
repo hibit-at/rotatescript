@@ -138,9 +138,9 @@
         controls.target.z = offset_z;
         renderer.render(scene, camera); // レンダリング
         requestAnimationFrame(tick);
-        var px = -Math.round(camera.position.x)/100;
-        var py = Math.round(camera.position.y)/100;
-        var pz = Math.round(camera.position.z)/100;
+        var px = -Math.round(camera.position.x)/10;
+        var py = Math.round(camera.position.y)/10;
+        var pz = Math.round(camera.position.z)/10;
         var rx = -Math.round(camera.rotation.x*180/Math.PI);
         var ry = -Math.round(camera.rotation.y*180/Math.PI)+180;
         var rz = Math.round(camera.rotation.z*180/Math.PI);
@@ -179,8 +179,7 @@
   <p>ROT : <span id="rot_div" style="font-weight:bold;background-color:#aaa;";>hoge</span>　<button onclick="copyToClipboard2()">COPY</button>
   <span id="rot_notify"></span></p>
   
-  <p>カメラターゲットの設定</p>
-  <p><span id="offset_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
+  <p>カメラターゲット <span id="offset_div" style="font-weight:bold;background-color:#aaa;";>hoge</span></p>
   <div style="line-height:10px;">
   <p>画像の中央がカメラが向く方向であり、回転の中心になります。カメラターゲットは以下の操作で動かすことができます。</p>
   <p><span style="font-weight:bold;">W/X</span> ... 上/下（UnityでいうY軸）</p>
@@ -188,10 +187,10 @@
   <p><span style="font-weight:bold;">S/Space</span> ... 奥/手前（UnityでいうZ軸）</p>
   <div stlye="color:#aa0;">
   <p>以下は開発者がThree.jsのライブラリを使いこなせてないことによる不便な部分です。ご容赦ください</p>
-  <p>※3Dソフトによくある、ホイールドラッグによる並行移動はありません。</p>
-  <p>※カメラターゲットの移動を組み合わせることにより並行移動してください。</p>
-  <p>※画像内でドラッグ/スクロールすることにより始めてカメラターゲットの変更がプレビューに反映されます。</p>
-  <p>※z軸の回転（ロール）はできません。</p>
+  <p>・3Dソフトによくある、ホイールドラッグによる並行移動はありません。</p>
+  <p>・カメラターゲットの移動を組み合わせることにより並行移動してください。</p>
+  <p>・画像内でドラッグ/スクロールすることにより始めてカメラターゲットの変更がプレビューに反映されます。</p>
+  <p>・z軸の回転（ロール）はできません。</p>
   </div>
     <input id="copyTarget1" type="text" value="hoge" readonly>
       <input id="copyTarget2" type="text" value="hoge" readonly>

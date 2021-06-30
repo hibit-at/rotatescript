@@ -28,7 +28,7 @@
             scene.add(light2);
 
             // カメラを作成
-            const camera = new THREE.PerspectiveCamera(60, width / height);
+            const camera = new THREE.PerspectiveCamera(60, width / height,1,20000);
             camera.position.set(0, {{par.h}}*100, {{par.r}}*100);
             camera.lookAt(new THREE.Vector3(0,{{par.a}}*100, 0));
 
@@ -77,6 +77,14 @@
             saber2.rotation.x = 10;
             scene.add(saber2);
 
+            const geometry6 = new THREE.BoxGeometry(250,400,2000);
+            const material6 = new THREE.MeshLambertMaterial({
+                color : 0x444444
+            });
+            const lane = new THREE.Mesh(geometry6, material6)
+            lane.position.set(0,-200,1200);
+            scene.add(lane);
+
 
             tick();
 
@@ -93,7 +101,7 @@
 <body onload="disp()">
 <link rel="stylesheet" href={% static 'sample.css' %}>
 <header>
-<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> RotateScriptor</h1>
+<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> Rotate Scriptor</h1>
 <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。　パラメータ可視化サービス→<a href="params">Params Detector</a></p>
 </header>
 <body onLoad="disp()">
