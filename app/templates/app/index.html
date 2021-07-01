@@ -28,7 +28,7 @@
             scene.add(light2);
 
             // カメラを作成
-            const camera = new THREE.PerspectiveCamera(65, width / height,1,20000);
+            const camera = new THREE.PerspectiveCamera(60, width / height,1,20000);
             camera.position.set(0, {{par.h}}*100, {{par.r}}*100);
             camera.lookAt(new THREE.Vector3(0,{{par.a}}*100, 0));
 
@@ -39,7 +39,7 @@
             group.position.z += {{par.o}}*100;
 
             // 箱を作成
-            const geometry = new THREE.BoxGeometry(400, 400, 200);
+            const geometry = new THREE.BoxGeometry(300, 400, 200);
             const material = new THREE.MeshLambertMaterial({
                 color: 0x6699FF
             });
@@ -77,7 +77,7 @@
             saber2.rotation.x = 10;
             scene.add(saber2);
 
-            const geometry6 = new THREE.BoxGeometry(250,400,2000);
+            const geometry6 = new THREE.BoxGeometry(200,400,2000);
             const material6 = new THREE.MeshLambertMaterial({
                 color : 0x444444
             });
