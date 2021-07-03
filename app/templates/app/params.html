@@ -67,6 +67,7 @@
         if( key_code == 68 ) offset_x -= 10;
         if( key_code == 83 ) offset_z += 10;
         if( key_code == 32 ) offset_z -= 10;
+        tick();
       }
 
       // controls
@@ -166,9 +167,11 @@
   </script>
 </head>
 <header>
-<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" width=50 height=50>Params Detector</h1>
-<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラの位置・角度パラメータと見え方をプレビューするWebサービスです。　回転スクリプト生成サービス→<a href="/">Rotate Scriptor</a></p>
+<h3 style="background-color:lightgray;padding:.5em;"> <a href = "/">Rotate Scriptor</a> / Params Detector</h3>
 </header>
+<h2>Params Detector</h2>
+<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラの位置・角度パラメータと見え方をプレビューするWebサービスです。</p>
+<p>使い方：キャンバス上でマウスをドラッグまたはスクロールすると、それに応じてカメラが動き、対応するパラメータが下に表示されます。</p>
 <body>
   <canvas id="myCanvas"></canvas>
   <p>マウスドラッグ...カメラ回転、マウスホイール...カメラズーム　<input type="button" value="RESET" onclick="window.location.reload();" /></p>
@@ -190,9 +193,11 @@
   <p>・3Dソフトによくある、ホイールドラッグによる並行移動はありません。</p>
   <p>・カメラターゲットの移動を組み合わせることにより並行移動してください。</p>
   <p>・画像内でドラッグ/スクロールすることにより始めてカメラターゲットの変更がプレビューに反映されます。</p>
+  <p>・<span style="text-decoration:underline;">カメラの位置を動かさずにカメラターゲットの変更を画面に反映したい場合</span>、スクロールダウンした後すぐアップすることにより可能です。</p>
   <p>・z軸の回転（ロール）はできません。</p>
   </div>
     <input id="copyTarget1" type="text" value="hoge" readonly>
       <input id="copyTarget2" type="text" value="hoge" readonly>
+    ※エラー防止用のダミーフォームです。
 </body>
 </html>

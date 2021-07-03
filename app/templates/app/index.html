@@ -101,11 +101,12 @@
 <body onload="disp()">
 <link rel="stylesheet" href={% static 'sample.css' %}>
 <header>
-<h1 style="background-color:lightgray;padding:.5em;"><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50> Rotate Scriptor</h1>
-<p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。　パラメータ可視化サービス→<a href="params">Params Detector</a></p>
+<h3 style="background-color:lightgray;padding:.5em;"> Rotate Scriptor / <a href="params">Params Detector</a></h3>
 </header>
 <body onLoad="disp()">
 <p>
+<h2><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50>Rotate Scriptor</h2> <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
+<p>使い方：半径、周期、カメラの高さ、カメラが向く位置、オフセットを指定して「再計算」ボタンを押した後、下のリンクからJSONをダウンロード！</p>
 <a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}.json">JSONダウンロード</a>
 </p>
 {% if is3D == '0' %}
@@ -219,15 +220,17 @@ window.requestAnimationFrame((ts) => loop(ts));
 {% endif %}
 <form method="post" action="/">
 {% csrf_token %}
-<p><span style="font-weight:bold;">プレビュー</span>　<input type="range" min='0' max='1' value={{is3D}} name="is3D">　左：二面図　右：立体　<input type="submit" value="再計算"></p>
+<p><input type="submit" value="再計算"></p>
+<p><input type="radio" name="is3D" value=0 {% if is3D == '0' %}checked="checked"{% endif %}>平面図<input type="radio" name="is3D" value=1 {% if is3D == '1' %}checked="checked"{% endif %}>立体図</p>
+
 <p><input type="number" placeholder="手入力" name="r" value = {{par.r}} step=0.01 style="width:100;"><span style="font-weight:bold;"> r : {{par.r}}</span> ... カメラが回転する半径 (m)</p>
-<p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;"><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転します</p>
+<p><input type="number" placeholder="手入力" name="t" value = {{par.t}} step=0.01 style="width:100;" min=0.5><span style="font-weight:bold;"> t : {{par.t}}</span> ... 周期 (s/r)  t 秒間に 1 回、回転します</p>
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)</p>
 <p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く方向の、垂直方向の位置 (m)</p>
 <p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの回転の中心及びカメラが向く方向の、前後方向の位置 (m)</p>
 </form>
 <p>
-CODE:
+手元のjsonファイルを直接編集したい人はこちらからコピー
 <button onclick="copyToClipboard()">COPY</button><span id="notify"></span>
 </p>
 <div class="box1">

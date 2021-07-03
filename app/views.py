@@ -24,7 +24,7 @@ def json_create(r, t, h, a, o):
                        ]
          }
 
-    need_step = 36
+    need_step = 72
 
     for i in range(need_step-1):
         new_j = copy.deepcopy(j["Movements"][0])
