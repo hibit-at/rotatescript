@@ -31,11 +31,13 @@
             const camera = new THREE.PerspectiveCamera(60, width / height,1,20000);
             camera.position.set(0, {{par.h}}*100, {{par.r}}*100);
             camera.lookAt(new THREE.Vector3(0,{{par.a}}*100, 0));
+            camera.rotation.z = {{par.s}}*Math.PI/180;
 
             //グループ？
             const group = new THREE.Group();
             scene.add(group);
             group.add(camera);
+            group.position.y = {{par.h}};
             group.position.z += {{par.o}}*100;
 
             // 箱を作成
@@ -92,7 +94,6 @@
             function tick() {
                 group.rotation.y += 6.28 / 60 / {{par.t}};
                 renderer.render(scene, camera); // レンダリング
-
                 requestAnimationFrame(tick);
             }
         }
@@ -107,7 +108,7 @@
 <p>
 <h2><img src="{% static 'bi.png' %}" style="animation: rotate {{par.t}}s linear infinite;" width=50 height=50>Rotate Scriptor</h2> <p>VRゲーム「<a href="https://beatsaber.com/">BeatSaber</a>」のMod「<a href="https://github.com/Snow1226/CameraPlus">CameraPlus</a>」で、カメラを回転するように動かすスクリプト（json）を作成するWebサービスです。</p>
 <p>使い方：半径、周期、カメラの高さ、カメラが向く位置、オフセットを指定して「再計算」ボタンを押した後、下のリンクからJSONをダウンロード！</p>
-<a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}.json">JSONダウンロード</a>
+<a href="/download?r={{par.r}}&t={{par.t}}&h={{par.h}}&a={{par.a}}&o={{par.o}}&s={{par.s}}" download="rotate-{{par.r}}-{{par.t}}-{{par.h}}-{{par.a}}-{{par.o}}-{{par.s}}.json">JSONダウンロード</a>
 </p>
 {% if is3D == '0' %}
 <script>
@@ -228,6 +229,7 @@ window.requestAnimationFrame((ts) => loop(ts));
 <p><input type="number" placeholder="手入力" name="h" value = {{par.h}} step=0.01 style="width:100;"><span style="font-weight:bold;"> h : {{par.h}}</span> ... カメラの高さ (m)</p>
 <p><input type="number" placeholder="手入力" name="a" value = {{par.a}} step=0.01 style="width:100;"><span style="font-weight:bold;"> a : {{par.a}}</span> ... カメラが向く方向の、垂直方向の位置 (m)</p>
 <p><input type="number" placeholder="手入力" name="o" value = {{par.o}} step=0.01 style="width:100;"><span style="font-weight:bold;"> o : {{par.o}}</span> ... カメラの回転の中心及びカメラが向く方向の、前後方向の位置 (m)</p>
+<p><input type="number" placeholder="手入力" name="s" value = {{par.s}} step=0.01 style="width:100;"><span style="font-weight:bold;"> s : {{par.s}}</span> ... カメラ自体の傾き</p>
 </form>
 <p>
 手元のjsonファイルを直接編集したい人はこちらからコピー
