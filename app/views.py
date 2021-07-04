@@ -12,7 +12,7 @@ truestr = "true"
 falsestr = "false"
 
 
-def json_create(r, t, h, a, o):
+def json_create(r, t, h, a, o, s):
     j = {"ActiveInPauseMenu": truestr,
          "Movements": [{"StartPos": {"x": 0, "y": 0, "z": 0},
                         "StartRot": {"x": 0, "y": 0, "z": 0},
@@ -58,6 +58,9 @@ def json_create(r, t, h, a, o):
         deg2 = math.degrees(rad2)
         j["Movements"][i]["StartRot"]["x"] = deg2
         j["Movements"][i]["EndRot"]["x"] = deg2
+        
+        j["Movements"][i]["StartRot"]["z"] = s
+        j["Movements"][i]["EndRot"]["z"] = s
 
     return j
 
@@ -81,8 +84,12 @@ def index(request):  # 追加
     is3D = '1'
     if "is3D" in request.POST:
         is3D = request.POST["is3D"]
-    text = str(json_create(r, t, h, a, o)).replace("'", '\"')
-    par = {'r': r, 't': t, 'h': h, 'a': a, 'o': o}
+    s = 0
+    if "s" in request.POST:
+        s = request.POST['s']
+    text = str(json_create(r, t, h, a, o, s)).replace("'", '\"')
+    par = {'r': r, 't': t, 'h': h, 'a': a, 'o': o, 's': s}
+    print(par)
     text = text.replace('"true"', 'true')
     text = text.replace('"false"', 'false')
     params = {'text': text, 'par': par, 'is3D': is3D}
@@ -105,7 +112,10 @@ def download(request):  # 追加
     o = 0.
     if "o" in request.GET:
         o = float(request.GET["o"])
-    text = str(json_create(r, t, h, a, o)).replace("'", '\"')
+    s = 0.
+    if "s" in request.GET:
+        o = float(request.GET["s"])
+    text = str(json_create(r, t, h, a, o, s)).replace("'", '\"')
     text = text.replace('"true"', 'true')
     text = text.replace('"false"', 'false')
     return HttpResponse(text)
