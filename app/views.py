@@ -66,19 +66,19 @@ def json_create(r, t, h, a, o, s):
 
 
 def index(request):  # 追加
-    r = 2.
+    r = 3.
     if "r" in request.POST:
         r = float(request.POST["r"])
-    t = 3.
+    t = 5.
     if "t" in request.POST:
         t = float(request.POST["t"])
-    h = 2.
+    h = 3.
     if "h" in request.POST:
         h = float(request.POST["h"])
-    a = 1.5
+    a = 1.
     if "a" in request.POST:
         a = float(request.POST["a"])
-    o = 0.
+    o = 1.
     if "o" in request.POST:
         o = float(request.POST["o"])
     is3D = '1'
@@ -97,19 +97,19 @@ def index(request):  # 追加
 
 
 def download(request):  # 追加
-    r = 2.
+    r = 3.
     if "r" in request.GET:
         r = float(request.GET["r"])
-    t = 1.
+    t = 5.
     if "t" in request.GET:
         t = float(request.GET["t"])
-    h = 2.
+    h = 3.
     if "h" in request.GET:
         h = float(request.GET["h"])
-    a = 1.5
+    a = 1.
     if "a" in request.GET:
         a = float(request.GET["a"])
-    o = 0.
+    o = 1.
     if "o" in request.GET:
         o = float(request.GET["o"])
     s = 0
